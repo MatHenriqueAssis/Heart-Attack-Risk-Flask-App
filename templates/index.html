@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href= "{{ url_for('static', filename= 'style.css')}}">
+    <title>Medical Data Form</title>
+</head>
+<body>
+    <h2>Risk of Heart Attack</h2>
+    <form action="/" method="POST">
+        
+        <label for="Gender">Gender:</label>
+        <select id="Gender" name="Gender" required>
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+        </select><br><br>
+
+        <label for="Age">Age:</label>
+        <input type="number" id="Age" name="Age" min="0" required><br><br>
+
+        <label for="Hypertension">Are you hypertensive? (PA):</label>
+        <select id="Hypertension" name="Hypertension" required>
+            <option value="0">No</option>No</option>
+            <option value="1">Yes</option>
+        </select><br><br>
+
+        <label for="Family_History">Do you have a family history?:</label>
+        <select id="Family_History" name="Family_History" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+    {% if predicao is not none%}
+        <div>
+            <h3>The level of your heart attack risk is: {{predicao}} </h3>
+        </div>
+
+    {%endif%}
+
+</body>
+</html>

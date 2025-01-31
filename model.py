@@ -14,10 +14,27 @@ import pickle
 #Criando um dataframe e retirando do arquivo CSV aquelas colunas que não poussuem grau de importancia. 
 
 df = pd.read_csv("instances/heart_attack_risk_dataset.csv", 
-                usecols= lambda x: x not in ["Thalassemia","Exercise_Induced_Angina", "Fasting_Blood_Sugar"],
+                usecols= ['Age', 'Gender', 'Hypertension','Family_History','Heart_Attack_Risk'],
+                nrows= 1000,
                 sep=",",
                 encoding="latin1"
                 )
+
+def categorize_age(Age):
+    if Age < 60:
+        return 'Adulto'
+    else:
+        return 'Idoso'
+
+df['Age'] = df['Age'].apply(categorize_age)
+
+def categorize_hypertension(Hypertension):
+    if Hypertension == 0:
+        return 'No'
+    elif Hypertension == 1:
+        return 'Yes'
+df['Hypertension'] = df['Hypertension'].apply(categorize_hypertension)
+
 
 '''
 print(df.columns)
@@ -37,19 +54,22 @@ plt.show()
 
 sns.countplot(data = df, x = 'Heart_Attack_Risk', hue = 'Family_History')
 plt.show()
-
 '''
+
 
 #Fazendo o mapeamento numerico para incializar o processo de treinamento do modelo.
 
-df['Gender'] = df['Gender'].map({'Male' : 0, 'Famele' : 1})
-df['Physical_Activity_Level'] = df['Physical_Activity_Level'].map({'Low' : 0, 'Moderate' : 1, 'High' : 2})
-df['Stress_level'] = df['Gender'].map({'Low' : 0, 'Moderate' : 1, 'High' : 2})
-df['Chest_Pain_Type'] = df['Chest_Pain_Type'].map({'Non-anginal' : 0, 'Asymptomatic' : 1, 'Typical' : 2 })
+df['Age'] = df['Age'].map({'Adulto' : 0, 'Idoso' : 1})
+df['Hypertension'] = df['Hypertension'].map({'Não' : 0, 'Sim' : 1})
+df['Gender'] = df['Gender'].map({'Famale' : 0, 'Male' : 1})
 df['Heart_Attack_Risk'] = df['Heart_Attack_Risk'].map({'Low' : 0, 'Moderate' : 1, 'High' : 2})
+
+
+print(df.dtypes)
 
 #Declarando as variaveis que serão utilizadas para o treinamento do modelo.
 
+'''
 X= df.drop("Heart_Attack_Risk", axis= 1)
 Y= df["Heart_Attack_Risk"]
 
@@ -58,10 +78,11 @@ Y= df["Heart_Attack_Risk"]
 
 X_train, X_test, y_train, y_test = train_test_split(X, Y, stratify=Y, test_size=0.2, random_state=0)
 
-'''
+
 DT = DecisionTreeClassifier() 
 DT.fit(X_train, y_train) 
 DT_pred = DT.predict(X_test) 
+
 
 
 RF = RandomForestClassifier(n_estimators=100) 
@@ -70,6 +91,18 @@ RF_pred = RF.predict(X_test)
 
 #Retornando os resultados dos treinamentos, para analisar qual está retornando uma melhor porcentagem de acertos.
 print("Árvore de Decisão:",accuracy_score(y_test, DT_pred)) 
-#print("Random Forest:",accuracy_score(y_test, RF_pred))
+print("Random Forest:",accuracy_score(y_test, RF_pred))
 
-'''
+plt.figure(figsize=(12, 8))
+caracteristicas_names = X.columns.tolist()
+rotulo_name = Y.unique().astype(str).tolist()
+plot_tree(DT, 
+    feature_names=caracteristicas_names,  
+    class_names=rotulo_name,    
+    filled=True,                      
+    rounded=True)                     
+plt.show()
+
+with open('Modelo_preditivo.pkl', 'wb') as f:
+    pickle.dump(DT, f)
+    '''

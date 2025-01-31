@@ -1,0 +1,73 @@
+/* Estilização Geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* Cinza claro */
+    color: #333; /* Cinza escuro */
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Cabeçalho */
+h2 {
+    color: #b22222; /* Vermelho escuro */
+}
+
+/* Estilização do Formulário */
+form {
+    background-color: white;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Rótulos */
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Campos de Entrada */
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botão de Envio */
+button {
+    background-color: #b22222; /* Vermelho escuro */
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #8b0000; /* Vermelho mais escuro */
+}
+
+/* Caixa de Predição */
+div {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #dcdcdc; /* Cinza médio */
+    border-radius: 8px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h3 {
+    color: #b22222; /* Vermelho escuro */
+}
